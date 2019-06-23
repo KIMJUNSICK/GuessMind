@@ -6,5 +6,5 @@ Build RealTime Drawing Game with JavaScript, Gulp and Socket.IO
 
 -[x] Server 
 -[x] Pug
--[] Static
+-[x] Static
 -[] SocketIO
