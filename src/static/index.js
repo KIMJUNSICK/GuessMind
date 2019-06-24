@@ -1,5 +1,17 @@
 const socket = io("/");
 
-socket.on("Hello", () => console.log("It's me"));
+const sendMessage = message => {
+  socket.emit("newMessage", { message });
+  console.log(`You: ${message}`);
+};
 
-setInterval(() => socket.emit("junsik"), 20000);
+const setNickname = nickname => {
+  socket.emit("setNickname", { nickname });
+};
+
+const handleNotif = data => {
+  const { message, nickname } = data;
+  console.log(`${nickname} : ${message}`);
+};
+
+socket.on("messageNotif", handleNotif);
