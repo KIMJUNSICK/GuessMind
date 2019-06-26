@@ -3,6 +3,7 @@ import express from "express";
 import socketIO from "socket.io";
 import logger from "morgan";
 import socketController from "./socketController";
+import events from "./events";
 
 const PORT = 5500;
 const app = express();
@@ -13,7 +14,7 @@ app.use(logger("dev"));
 app.use(express.static(join(__dirname, "static")));
 
 const handleHome = (req, res) => {
-  res.render("home");
+  res.render("home", { events: JSON.stringify(events) });
 };
 
 app.get("/", handleHome);
