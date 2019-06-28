@@ -5,6 +5,7 @@ import {
   showControls,
   resetCanvas
 } from "./paint";
+import { hideChat } from "./chat";
 
 const board = document.getElementById("jsPBoard");
 const notifs = document.getElementById("jsNotifs");
@@ -14,7 +15,7 @@ const addPlayer = players => {
   board.innerHTML = "";
   players.forEach(player => {
     const playerElement = document.createElement("span");
-    playerElement.innerText = `${player.nickname} : ${player.point}`;
+    playerElement.innerText = `${player.nickname} : ${player.points}`;
     board.appendChild(playerElement);
   });
 };
@@ -35,6 +36,7 @@ export const handleGameStarted = () => {
 export const handleLeaderNotif = ({ word }) => {
   enableCanvas();
   showControls();
+  hideChat();
   notifs.innerText = `You are the Painter, paint : ${word}`;
 };
 
@@ -44,3 +46,5 @@ export const handleGameEnded = () => {
   hideControls();
   resetCanvas();
 };
+
+export const handleStartSoon = () => setNotifs("Game will start Soon");
