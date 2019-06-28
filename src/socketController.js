@@ -4,8 +4,9 @@ import { chooseWord } from "./words";
 let sockets = [];
 let inProgress = false;
 let word = null;
+let leader = null;
 
-const chooseLeader = () => sockets[Math.floor(Math.random * sockets.length)];
+const chooseLeader = () => sockets[Math.floor(Math.random() * sockets.length)];
 
 const socketController = (socket, io) => {
   const broadcast = (event, data) => socket.broadcast.emit(event, data);
@@ -16,9 +17,18 @@ const socketController = (socket, io) => {
   const startGame = () => {
     if (inProgress === false) {
       inProgress = true;
-      const leader = chooseLeader();
+      leader = chooseLeader();
       word = chooseWord();
+      setTimeout(() => {
+        globalBroadcast(events.gameStarted);
+        io.to(leader.id).emit(events.leaderNotif, { word });
+      }, 2000);
     }
+  };
+
+  const endGame = () => {
+    inProgress = false;
+    globalBroadcast(events.gameEnded);
   };
 
   socket.on(events.setNickname, ({ nickname }) => {
@@ -26,11 +36,20 @@ const socketController = (socket, io) => {
     sockets.push({ id: socket.id, point: 0, nickname: nickname });
     broadcast(events.newUser, { nickname });
     sendPlayerUpdate();
-    startGame();
+    if (sockets.length === 2) {
+      startGame();
+    }
   });
 
   socket.on(events.disconnect, () => {
     sockets = sockets.filter(aSocket => aSocket.id !== socket.id);
+    if (sockets.length === 1) {
+      endGame();
+    } else if (leader) {
+      if (leader.id === socket.id) {
+        endGame();
+      }
+    }
     broadcast(events.disconnected, { nickname: socket.nickname });
     sendPlayerUpdate();
   });
