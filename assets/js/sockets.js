@@ -12,6 +12,7 @@ import {
   handleGameEnded,
   handleStartSoon
 } from "./players";
+import { handleTimeOut, handleResetTimeout } from "./time";
 
 let socket = null;
 
@@ -31,4 +32,6 @@ export const initSockets = aSocket => {
   socket.on(events.leaderNotif, handleLeaderNotif);
   socket.on(events.gameEnded, handleGameEnded);
   socket.on(events.startSoon, handleStartSoon);
+  socket.on(events.timeOut, handleTimeOut);
+  socket.on(events.resetTimeout, handleResetTimeout);
 };

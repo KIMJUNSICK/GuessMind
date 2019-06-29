@@ -6,6 +6,7 @@
 @import "chat";
 @import "game";
 @import "board";
+@import "overCanvas";
 
 * {
   box-sizing: border-box;
@@ -41,4 +42,11 @@ body {
       display: flex;
     }
   }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

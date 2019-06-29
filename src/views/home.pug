@@ -12,7 +12,9 @@ html(lang="en")
                 input(placeholder="What's your Nickname?", type="text")
         .gameContainer#jsGame
             .main
-                #jsNotifs
+                .overCanvas
+                    .notif#jsNotifs
+                    .time#jsTime
                 canvas.canvas#jsCanvas
                 .controls#jsControls  
                     button#jsMode Fill

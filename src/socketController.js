@@ -24,8 +24,9 @@ const socketController = (socket, io) => {
         globalBroadcast(events.startSoon);
         setTimeout(() => {
           globalBroadcast(events.gameStarted);
+          globalBroadcast(events.timeOut);
           io.to(leader.id).emit(events.leaderNotif, { word });
-          timeout = setTimeout(endGame, 30000);
+          timeout = setTimeout(endGame, 31000);
         }, 5000);
       }
     }
@@ -34,6 +35,7 @@ const socketController = (socket, io) => {
   const endGame = () => {
     inProgress = false;
     globalBroadcast(events.gameEnded);
+    globalBroadcast(events.resetTimeout);
     if (timeout !== null) {
       clearTimeout(timeout);
     }
