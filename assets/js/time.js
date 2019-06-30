@@ -1,6 +1,7 @@
 const timeContainer = document.getElementById("jsTime");
 
-let limitedTime = 31;
+const TIME_LIMITED = 31;
+let limitedTime = TIME_LIMITED;
 let decreaseTime = null;
 
 const decrease = () => {
@@ -8,7 +9,7 @@ const decrease = () => {
   timeContainer.innerText = limitedTime;
   if (limitedTime < 0) {
     timeContainer.innerText = "";
-    limitedTime = 31;
+    limitedTime = TIME_LIMITED;
     clearInterval(decreaseTime);
   }
 };
@@ -18,7 +19,7 @@ export const handleTimeOut = () => {
 };
 
 export const handleResetTimeout = () => {
-  limitedTime = 31;
+  limitedTime = TIME_LIMITED;
   timeContainer.innerText = "";
   clearInterval(decreaseTime);
 };
